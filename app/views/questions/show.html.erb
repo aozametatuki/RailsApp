@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="display-4 text-primary">Questions & Answer</h1>
+
+# 質問のプロパティを表示
+<div id="jumbottom p-4 mb-4">
+  <h2 class="card-title">
+    <%= @quiestion.title %>
+  </h2>
+  <p class="card-text">
+    <%= @quiestion.content %>
+  </p>
+  <p class="blockquote-footer text-right">
+    <%= @quiestion.name %>
+  </p>
+  <div class="<%= @question.finished ? 'text-danger' : 'text-primary' %>">
+    <%= @question.finished ? '終了' : '受付中' %>
+  </div>
+</div>
+
+# 質問が終了していない場合
+<% if @question.finished? == false then %>
+  <div class="card p-3 mb-4">
+    <h3 class="h4 text-primary">※回答する</h3>
+    <%= render 'form2', answer: @answer %>
+  </div>
+<% end %>
+
+<h3 class="h4 text-primary">※これまで寄せられた回答</h3>
+
+# 回答内容を表示
+<ul class="list-group">
+<% if @question.answer.count == 0 then %>
+  <p class="answer">※まだありません。</p>
+<% else %> 
+  <% @question.answer.reverse_each do |re| %>
+    <li class="list-group-item">
+      <%= re.content + ' (' + re.name + ')' %>
+    </li>
+  <% end %>
+</ul>
